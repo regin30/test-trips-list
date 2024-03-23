@@ -1,0 +1,18 @@
+.input__wrapper{
+	width: 100%;
+	max-width: 300px;
+	.input-antd {
+		height: 8dvh;
+		width: 100%;
+	}
+	
+	.input-error{
+		width: 100%;
+		max-width: 300px;
+		text-align: left;
+		color: rgb(248, 0, 0);
+		font-size: 16px;
+		margin-top: 5px;
+		padding: 0;
+	}
+}
