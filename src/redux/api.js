@@ -1,10 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setAuthorized } from './authService/authSlice'
+import { TOKEN } from '../utils/constants'
+
 
 export const baseQuery = fetchBaseQuery({
 	baseUrl: import.meta.env.VITE_BASE_URL,
 	prepareHeaders: (headers) => {
-		const access = localStorage.getItem('token')
+		const access = localStorage.getItem(TOKEN)
 
 		if (access) {
 			headers.set('authorization', `Bearer ${access}`)

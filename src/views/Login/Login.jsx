@@ -7,6 +7,8 @@ import Input from '../../components/Input/Input'
 import Button from '../../components/Button/Button'
 import { useLoginMutation } from '../../redux/authService/authApi'
 import { setAuthorized } from '../../redux/authService/authSlice'
+import {
+	STYLE_PRIMARY, TYPE_SUBMIT, LOGIN, PASSWORD, TOKEN, TYPE_TEXT } from '../../utils/constants'
 
 function Login() {
 	const [logIn] = useLoginMutation()
@@ -17,7 +19,7 @@ function Login() {
 		const checkedValue = value.replace(' ', '')
 
 		if (checkedValue.length < 1) {
-			setFieldError('login', 'Введите логин')
+			setFieldError(LOGIN, 'Введите логин')
 			return true
 		}
 	}
@@ -26,7 +28,7 @@ function Login() {
 		const checkedValue = value.replace(' ', '')
 
 		if (checkedValue.length < 1) {
-			setFieldError('password', 'Введите пароль')
+			setFieldError(PASSWORD, 'Введите пароль')
 			return true
 		}
 	}
@@ -50,11 +52,6 @@ function Login() {
 		}
 	}
 
-	function resetErrors(resetLoginErr, resetPassworErr) {
-		resetLoginErr('login', '')
-		resetPassworErr('password', '')
-	}
-
 	async function loginSystem(values, setFieldError) {
 		const { login, password } = values
 		const trimmedLogin = login.trim()
@@ -75,13 +72,13 @@ function Login() {
 			}
 
 			dispatch(setAuthorized(true))
-			localStorage.setItem('token', response.result.token)
+			localStorage.setItem(TOKEN, response.result.token)
 
 			navigate('/')
 		} catch (e) {
 			if (e.status === 400) {
-				setFieldError('password', 'Неверный пароль')
-				setFieldError('login', 'Неверный логин')
+				setFieldError(PASSWORD, 'Неверный пароль')
+				setFieldError(LOGIN, 'Неверный логин')
 			}
 
 			console.log('Login catch error', e)
@@ -89,8 +86,8 @@ function Login() {
 	}
 
 	return (
-		<div className="login__container">
-			<div className="login__form-container">
+		<div className='login__container'>
+			<div className='login__form-container'>
 
 				<Formik
 					initialValues={{
@@ -99,36 +96,34 @@ function Login() {
 					}}
 					onSubmit={async (values, { setFieldError }) => loginSystem(values, setFieldError)}
 				>
-					{({ values, errors, handleSubmit, handleChange, setFieldError }) => (
+					{({ values, errors, handleSubmit, handleChange }) => (
 						<form onSubmit={handleSubmit} noValidate>
 							<Field
 								as={Input}
-								type="text"
+								type={TYPE_TEXT}
 								onChange={handleChange}
 								value={values.login}
-								placeholder="Логин"
+								placeholder={LOGIN}
 								required={true}
 								error={getError(errors.login)}
-								name="login"
-								onClick={() => resetErrors(setFieldError, setFieldError)}
+								name={LOGIN}
 							/>
 
 							<Field
 								as={Input}
-								type="password"
+								type={PASSWORD}
 								onChange={handleChange}
 								value={values.password}
-								placeholder="Пароль"
+								placeholder={'Пароль'}
 								required={true}
 								error={getError(errors.password)}
-								name="password"
-								onClick={() => resetErrors(setFieldError, setFieldError)}
+								name={PASSWORD}
 							/>
 
 							<Button
-								title='Войти'
-								type={'primary'}
-								htmlType={'submit'}
+								title={'Войти'}
+								type={STYLE_PRIMARY}
+								htmlType={TYPE_SUBMIT}
 							/>
 						</form>
 					)}

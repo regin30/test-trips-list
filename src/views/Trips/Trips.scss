@@ -1,7 +1,16 @@
+.plug{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 .trips__wrapper {
+	flex: 1;
+	width: 100%;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 	flex-direction: column;
 
 	.trips__header {
@@ -21,9 +30,13 @@
 	.trips__search {
 		width: 100%;
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-start;
 		align-items: center;
 		margin-bottom: 20px;
+
+		.input__wrapper{
+			margin-right: 10px;
+		}
 	}
 
 	@media (max-width: 650px) {
@@ -36,6 +49,24 @@
 			.input__wrapper {
 				margin-bottom: 20px;
 			}
+		}
+	}
+	
+	.trips__status-filter{
+		width: 100%;
+		margin: 0 0 20px 0;
+
+		.trips__status-filter-header{
+			display: flex;
+			justify-content: flex-start;
+		}
+
+		.button-antd:first-child{
+			margin-right: 10px;
+		}
+
+		.button-antd:last-child{
+			max-width: 100px;
 		}
 	}
 
@@ -53,17 +84,6 @@
 				display: grid;
 				grid-template-rows: 1fr;
 				border-left: 1px solid lightgray;
-			}
-
-			.hidden {
-				max-height: 0;
-				overflow: hidden;
-				transition: max-height 0.3s ease-in-out;
-			}
-
-			.show {
-				max-height: max-content;
-				transition: max-height 0.3s ease-in-out;
 			}
 
 			.trips__table-info {
@@ -95,7 +115,15 @@
 				border-radius: 0;
 	
 				.trips__table-icon {
-					transform: scale(0.7);
+					transition: transform 0.3s ease;
+
+					&.up{
+						transform: scale(0.7) rotate(180deg);
+					}
+
+					&.down{
+						transform: scale(0.7) rotate(0deg);
+					}
 				}
 			}
 		}
